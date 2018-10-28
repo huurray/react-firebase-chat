@@ -47,6 +47,13 @@ const p3 = css`
   line-height: 1.7;
   color: ${(props: any) => (props.white ? '#fff' : '#222')};
 `;
+const p4 = css`
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  font-size: 1.3rem;
+  line-height: 1.7;
+  color: ${(props: any) => (props.white ? '#fff' : '#222')};
+`;
 
 export default {
   h1,
@@ -54,5 +61,6 @@ export default {
   h3,
   p1,
   p2,
-  p3
+  p3,
+  p4
 };

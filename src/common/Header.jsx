@@ -2,7 +2,7 @@ import React from 'react';
 import * as firebase from 'firebase';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import styled from 'styled-components';
-import './auth.css';
+import './css/loginButton.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from '../redux/modules/user';
@@ -10,7 +10,7 @@ import * as userActions from '../redux/modules/user';
 const Container = styled.div`
   display: flex;
   height: 8rem;
-  padding: 0 10%;
+  padding: 0 20%;
   background-color: ${props => props.theme.colors.PRIMARY};
 `;
 const TitleBox = styled.div`
@@ -18,7 +18,7 @@ const TitleBox = styled.div`
   justify-content: center;
   align-items: center;
   margin-right: auto;
-  padding-left: 3rem;
+  padding-left: 2rem;
 `;
 const Title = styled.h1`
   ${props => props.theme.typo.h1};
@@ -28,6 +28,7 @@ const Profile = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-right: 2rem;
 `;
 const Thumb = styled.img`
   width: 3rem;
@@ -38,6 +39,16 @@ const Thumb = styled.img`
 const Name = styled.div`
   ${props => props.theme.typo.h3};
   color: ${props => props.theme.colors.WHITE};
+`;
+const Logout = styled.div`
+  ${props => props.theme.typo.h3};
+  color: ${props => props.theme.colors.SECONDARY};
+  padding-left: 2rem;
+  transition: all 0.2s;
+  cursor: pointer;
+  &:hover {
+    color: ${props => props.theme.colors.TERTIARY};
+  }
 `;
 
 class Header extends React.Component {
@@ -57,12 +68,14 @@ class Header extends React.Component {
           this.props.userActions.getUser({
             displayName: data.user.displayName,
             email: data.user.email,
-            photoURL: data.user.photoURL
+            photoURL: data.user.photoURL,
+            uid: data.user.uid
           });
           this.props.history.replace('/');
         }
       }
     };
+    console.log(this.props.user)
     return (
       <Container>
         <TitleBox>
@@ -72,6 +85,18 @@ class Header extends React.Component {
           <Profile>
             <Thumb src={this.props.user.photoURL} alt="profile thumnail" />
             <Name>{this.props.user.displayName}</Name>
+            <Logout
+              onClick={() => {
+                firebase
+                  .auth()
+                  .signOut()
+                  .then(() => {
+                    this.props.userActions.logOutUser();
+                  });
+              }}
+            >
+              Logout
+            </Logout>
           </Profile>
         ) : (
           <StyledFirebaseAuth

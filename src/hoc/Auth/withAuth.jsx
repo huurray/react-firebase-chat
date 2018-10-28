@@ -14,7 +14,8 @@ function withAuth(Component: React.ComponentClass<any>) {
           this.props.userActions.getUser({
             displayName: user.displayName,
             email: user.email,
-            photoURL: user.photoURL
+            photoURL: user.photoURL,
+            uid: user.uid
           });
 
           //이후 서버에서 GET하는 추가적인 유저 정보 입력 to redux store

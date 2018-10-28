@@ -1,7 +1,8 @@
-const PRIMARY = '#2D8ABE';
+const PRIMARY = '#0288D1';
 const SECONDARY = '#f6f155';
 const TERTIARY = '#FE7D7C';
 
+const GREY_LIGHT_0 = '#f3f3f3';
 const GREY_LIGHT_1 = '#F7F7F7';
 const GREY_LIGHT_2 = '#EEE';
 const GREY_LIGHT_3 = '#CCC';
@@ -21,6 +22,7 @@ export default {
   PRIMARY,
   SECONDARY,
   TERTIARY,
+  GREY_LIGHT_0,
   GREY_LIGHT_1,
   GREY_LIGHT_2,
   GREY_LIGHT_3,

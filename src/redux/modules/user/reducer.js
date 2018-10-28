@@ -3,7 +3,8 @@ const initialState = {
   data: {
     displayName: '',
     email: '',
-    photoURL: ''
+    photoURL: '',
+    uid: ''
   }
 };
 
