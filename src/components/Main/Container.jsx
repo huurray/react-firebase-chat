@@ -59,36 +59,27 @@ export default class extends React.Component {
     if (!file.type.match('image.*')) {
       return Alert.error('사진파일만 보낼 수 있어요.');
     }
+    if(file.size > 2000000) {
+      return Alert.error('사이즈는 3mb까지 가능합니다.');
+    }
 
     try {
-      const messageRef = await firebase
-        .database()
-        .ref('/messages/')
-        .push({
-          displayName: this.props.user.displayName,
-          imageMsgURL: '',
-          photoURL: this.props.user.photoURL,
-          creatorId: this.props.user.uid,
-          createdAt: new Date().getTime()
-        });
-      console.log(messageRef);
+      const messageRef = await firebase.database().ref('/messages/');
+
       const filePath =
-        firebase.auth().currentUser.uid +
-        '/' +
-        messageRef.key +
-        '/' +
-        file.name;
-      console.log(filePath);
+        firebase.auth().currentUser.uid + '/messages/' + file.name;
       const fileSnapshot = await firebase
         .storage()
         .ref(filePath)
         .put(file);
-      console.log(fileSnapshot);
       const url = await fileSnapshot.ref.getDownloadURL();
-      console.log(url);
-      messageRef.update({
+
+      messageRef.push({
+        displayName: this.props.user.displayName,
         imageMsgURL: url,
-        storageURI: fileSnapshot.metadata.fullPath
+        photoURL: this.props.user.photoURL,
+        creatorId: this.props.user.uid,
+        createdAt: new Date().getTime()
       });
     } catch (err) {
       console.log(err);

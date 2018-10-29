@@ -68,26 +68,29 @@ class ChatCards extends React.Component {
   }
 
   showChatCards() {
-    return this.props.messages.map(m => {
+    return this.props.messages.map((m, i) => {
       let me = false;
       if (this.props.user.uid === m.creatorId) me = true;
 
       const isPhotoURL = m.photoURL || require('./img/profile_placeholder.png');
 
-      const relativeTime = moment(m.createdAt).fromNow();
-
+      const relativeTime = moment(m.createdAt).format('LLL');
+      
       return (
         <Card key={m.key} me={me}>
           <ProfileImg src={isPhotoURL} />
-          {m.imageMsgURL ? (
+          {m.message && (
+            <TextBox>
+              <Message me={me}>{m.message}</Message>
+              <Name me={me}>
+                {m.displayName}, {relativeTime}
+              </Name>
+            </TextBox>
+          )}
+          {m.imageMsgURL && (
             <ImgBox>
               <ImgMessage src={m.imageMsgURL} />
             </ImgBox>
-          ) : (
-            <TextBox>
-              <Message me={me}>{m.message}</Message>
-              <Name me={me}>{m.displayName}, {relativeTime}</Name>
-            </TextBox>
           )}
         </Card>
       );
